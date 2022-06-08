@@ -1,132 +1,211 @@
-import React from 'react';
-import {getMergeSortAnimations} from './sortingAlgorithms';
-import './SortingVisualizer.css';
+// import React from 'react';
+// import {getMergeSortAnimations} from './sortingAlgorithms';
+// import './SortingVisualizer.css';
 
 
-// Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 3;
+// // Change this value for the speed of the animations.
+// const ANIMATION_SPEED_MS = 3;
 
-// Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 259;
+// // Change this value for the number of bars (value) in the array.
+// const NUMBER_OF_ARRAY_BARS = 259;
 
-// This is the main color of the array bars.
-const PRIMARY_COLOR = 'turquoise';
+// // This is the main color of the array bars.
+// const PRIMARY_COLOR = 'turquoise';
 
-// This is the color of array bars that are being compared throughout the animations.
-const SECONDARY_COLOR = 'red';
+// // This is the color of array bars that are being compared throughout the animations.
+// const SECONDARY_COLOR = 'red';
 
-export default class SortingVisualizer extends React.Component {
-  constructor(props) {
-    super(props);
+// export default class SortingVisualizer extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      array: [],
-    };
-  }
+//     this.state = {
+//       array: [],
+//     };
+//   }
 
-  componentDidMount() {
-    this.resetArray();
-  }
+//   componentDidMount() {
+//     this.resetArray();
+//   }
 
-  resetArray() {
-    const array = [];
-    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(randomIntFromInterval(5, 730));
-    }
-    this.setState({array});
-  }
+//   resetArray() {
+//     const array = [];
+//     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+//       array.push(randomIntFromInterval(5, 730));
+//     }
+//     this.setState({array});
+//   }
 
-  mergeSort() {
-    const animations = getMergeSortAnimations(this.state.array);
-    for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-bar');
-      const isColorChange = i % 3 !== 2;
-      if (isColorChange) {
-        const [barOneIdx, barTwoIdx] = animations[i];
-        const barOneStyle = arrayBars[barOneIdx].style;
-        const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-        setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
-        }, i * ANIMATION_SPEED_MS);
-      } else {
-        setTimeout(() => {
-          const [barOneIdx, newHeight] = animations[i];
-          const barOneStyle = arrayBars[barOneIdx].style;
-          barOneStyle.height = `${newHeight}px`;
-        }, i * ANIMATION_SPEED_MS);
-      }
-    }
-  }
+//   mergeSort() {
+//     const animations = getMergeSortAnimations(this.state.array);
+//     for (let i = 0; i < animations.length; i++) {
+//       const arrayBars = document.getElementsByClassName('array-bar');
+//       const isColorChange = i % 3 !== 2;
+//       if (isColorChange) {
+//         const [barOneIdx, barTwoIdx] = animations[i];
+//         const barOneStyle = arrayBars[barOneIdx].style;
+//         const barTwoStyle = arrayBars[barTwoIdx].style;
+//         const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+//         setTimeout(() => {
+//           barOneStyle.backgroundColor = color;
+//           barTwoStyle.backgroundColor = color;
+//         }, i * ANIMATION_SPEED_MS);
+//       } else {
+//         setTimeout(() => {
+//           const [barOneIdx, newHeight] = animations[i];
+//           const barOneStyle = arrayBars[barOneIdx].style;
+//           barOneStyle.height = `${newHeight}px`;
+//         }, i * ANIMATION_SPEED_MS);
+//       }
+//     }
+//   }
 
-  quickSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
+//   quickSort() {
+//     // We leave it as an exercise to the viewer of this code to implement this method.
+//   }
 
-  heapSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
+//   heapSort() {
+//     // We leave it as an exercise to the viewer of this code to implement this method.
+//   }
 
-  bubbleSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
+//   bubbleSort() {
+//     // We leave it as an exercise to the viewer of this code to implement this method.
+//   }
 
-  // NOTE: This method will only work if your sorting algorithms actually return
-  // the sorted arrays; if they return the animations (as they currently do), then
-  // this method will be broken.
-  testSortingAlgorithms() {
-    for (let i = 0; i < 100; i++) {
-      const array = [];
-      const length = randomIntFromInterval(1, 1000);
-      for (let i = 0; i < length; i++) {
-        array.push(randomIntFromInterval(-1000, 1000));
-      }
-      const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-      const mergeSortedArray = getMergeSortAnimations(array.slice());
-      console.log(arraysAreEqual(javaScriptSortedArray, mergeSortedArray));
-    }
-  }
+//   // NOTE: This method will only work if your sorting algorithms actually return
+//   // the sorted arrays; if they return the animations (as they currently do), then
+//   // this method will be broken.
+//   testSortingAlgorithms() {
+//     for (let i = 0; i < 100; i++) {
+//       const array = [];
+//       const length = randomIntFromInterval(1, 1000);
+//       for (let i = 0; i < length; i++) {
+//         array.push(randomIntFromInterval(-1000, 1000));
+//       }
+//       const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+//       const mergeSortedArray = getMergeSortAnimations(array.slice());
+//       console.log(arraysAreEqual(javaScriptSortedArray, mergeSortedArray));
+//     }
+//   }
 
-  render() {
-    const {array} = this.state;
+//   render() {
+//     const {array} = this.state;
 
-    return (
-      <div className="array-container">
-        {array.map((value, idx) => (
-          <div
-            className="array-bar"
-            key={idx}
-            style={{
-              backgroundColor: PRIMARY_COLOR,
-              height: `${value}px`,
-            }}></div>
-        ))}
-        <button onClick={() => this.resetArray()}>Generate New Array</button>
-        <button onClick={() => this.mergeSort()}>Merge Sort</button>
-        <button onClick={() => this.quickSort()}>Quick Sort</button>
-        <button onClick={() => this.heapSort()}>Heap Sort</button>
-        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-        <button onClick={() => this.testSortingAlgorithms()}>
-          Test Sorting Algorithms (BROKEN)
-        </button>
-      </div>
-    );
-  }
-}
+//     return (
+//       <div className="array-container">
+//         {array.map((value, idx) => (
+//           <div
+//             className="array-bar"
+//             key={idx}
+//             style={{
+//               backgroundColor: PRIMARY_COLOR,
+//               height: `${value}px`,
+//             }}></div>
+//         ))}
+//         <button onClick={() => this.resetArray()}>Generate New Array</button>
+//         <button onClick={() => this.mergeSort()}>Merge Sort</button>
+//         <button onClick={() => this.quickSort()}>Quick Sort</button>
+//         <button onClick={() => this.heapSort()}>Heap Sort</button>
+//         <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+//         <button onClick={() => this.testSortingAlgorithms()}>
+//           Test Sorting Algorithms (BROKEN)
+//         </button>
+//       </div>
+//     );
+//   }
+// }
 
-// From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-function randomIntFromInterval(min, max) {
-  // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+// // From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+// function randomIntFromInterval(min, max) {
+//   // min and max included
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// }
 
-function arraysAreEqual(arrayOne, arrayTwo) {
-  if (arrayOne.length !== arrayTwo.length) return false;
-  for (let i = 0; i < arrayOne.length; i++) {
-    if (arrayOne[i] !== arrayTwo[i]) {
-      return false;
-    }
-  }
-  return true;
-}
+// function arraysAreEqual(arrayOne, arrayTwo) {
+//   if (arrayOne.length !== arrayTwo.length) return false;
+//   for (let i = 0; i < arrayOne.length; i++) {
+//     if (arrayOne[i] !== arrayTwo[i]) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
+
+
+<?php
+	//$res = shell_exec("python3 test.py");
+	//echo $res;
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/opensans.css" />
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php" style="color: #ffffff; font-size: 24px; margin-left: 15px;">Search</a>
+    </div>
+</nav>
+
+<div class="main">
+	<div class="row">
+		<div class="col-md-4"></div>
+
+		<div class="col-md-4">
+			<div id="youtube-video">
+			<center>
+				Video Search
+			</center>
+			</div>
+		</div>
+
+		<div class="col-md-4"></div>
+		
+	</div>
+	<br/>
+	<div class="row">
+		<div class="col-md-4"></div>
+
+		<div class="col-md-4">
+			<div id="amazon-product">
+			<center>
+				Product Search
+			</center>	
+			</div>
+		</div>
+
+		<div class="col-md-4"></div>
+	</div>
+	<br/>
+</div>
+
+</body>
+
+<footer class="footer">
+  <div class="container">
+  <center>
+    <p class="text-muted">&copy; Major Project Search</p>
+  </center>  
+  </div>
+</footer>
+
+<script type="text/javascript">
+	$("#youtube-video").click(function(){
+		window.location.href = "youtube.php";
+	});
+
+	$("#amazon-product").click(function(){
+		window.location.href = "amazon.php";
+	});
+
+</script>
+
+</html>
